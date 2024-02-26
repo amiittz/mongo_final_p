@@ -13,7 +13,7 @@ module.exports = {
 
     AddOrder: async (req, res) => {
         try {
-            const { items} = req.body;
+            const {items} = req.body;
             const order = await createOrder(items);
             res.json(order)
         }

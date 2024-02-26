@@ -14,7 +14,7 @@ module.exports = {
     },
     addBook: async (req, res) => {
         try {
-            const {title,publishingYear,genres,authors,quantity,price} =req.body;
+            const {title,publishingYear,genres,authors,quantity,price} = req.body;
             const book = await createBook(title,publishingYear,genres,authors,quantity,price)
             res.json(book)
         }

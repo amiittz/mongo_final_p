@@ -1,4 +1,4 @@
-const { getAllUsers , createUser} = require('../services/User')
+const { getAllUsers , createUser, delUser,addOrder} = require('../services/User')
 
 module.exports = {
     UserList: async (req, res) => {
@@ -20,4 +20,23 @@ module.exports = {
             res.status(500).send(err);
         }
     },
+    deleteUser: async(req,res)=>{
+        try {
+            const {id} =req.body;
+            
+            res.json(await delUser(id));
+        }
+        catch (err) {
+            res.status(500).send(err)
+        }
+    },
+    addOrderes: async(req,res)=>{
+        try {
+            const {name,order} =req.body;
+            res.json(await addOrder(name,order));
+        }
+        catch (err) {
+            res.status(500).send(err)
+        }
+    }
 }

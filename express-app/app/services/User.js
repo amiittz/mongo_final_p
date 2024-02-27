@@ -16,5 +16,15 @@ module.exports = {
         const arr = []
         const temp = new User({name,pass,arr});
         return await temp.save();
-    }
+    },
+    delUser: async (id) => {
+        const temp= User.findByIdAndDelete(id);
+        return temp;
+    },
+    addOrder: async (nam,order) => {
+        const user = await User.findOne({ name: nam });
+        user.orders.push(order);
+        await user.save();
+        return user;
+    },
 }

@@ -13,11 +13,11 @@ module.exports = {
             price: p.price
         }));
     },
-    createBook: async (title,publishingYear,genres,authors,quantity,price) => { //הוספה
+    createBook: async (title,image,publishingYear,genres,authors,quantity,price) => { //הוספה
         try{
         const existingAuthor = await author.findOne({ _id: authors._id });//בדיקה לפי הID
         if (existingAuthor){
-            const book = new Book({title,publishingYear,genres,authors,quantity,price});
+            const book = new Book({title,image,publishingYear,genres,authors,quantity,price});
             return book.save();
         }else{
             return "author dont exists";

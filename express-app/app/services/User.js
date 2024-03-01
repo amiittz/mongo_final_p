@@ -27,4 +27,10 @@ module.exports = {
         await user.save();
         return user;
     },
+    delOrder: async (nam,orderid) => {
+        const user = await User.findOne({ name: nam });
+        user.orders.pull(orderid);
+        await user.save();
+        return user;
+    }
 }

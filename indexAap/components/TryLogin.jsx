@@ -5,9 +5,8 @@ function UserForm() {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
-    const [books, setBooks] = useState([
-        
-    ]);
+    const [books, setBooks] = useState([]);
+    const [selectedBooks, setSelectedBooks] = useState([]);
 
     useEffect(() => {
         // Fetch books when the component mounts
@@ -17,7 +16,7 @@ function UserForm() {
     const fetchBooks = async () => {
         try {
             // Simulating fetching books from an API
-            const response = await axios.get("http://localhost:3001/api/books");
+            const response = await axios.get("http://localhost:3001/api/book");
             setBooks(response.data);
         } catch (error) {
             console.error("Error fetching books:", error);
@@ -38,28 +37,24 @@ function UserForm() {
     };
 
     const handleOrder = () => {
-        // Handle order functionality here
-        alert("Order functionality will be implemented here");
+        // Get names of selected books
+        const selectedBookNames = selectedBooks.map(book => book.title).join(", ");
+        alert(`Selected books: ${selectedBookNames}`);
     };
 
-    const handleDecrease = (id) => {
+    const handleCheckboxChange = (id) => {
+        // Toggle selected state for the clicked book
         const updatedBooks = books.map(book => {
-            if (book.id === id && book.orderQuantity > 0) {
-                return { ...book, orderQuantity: book.orderQuantity - 1 };
+            if (book._id === id) {
+                return { ...book, selected: !book.selected };
             }
             return book;
         });
         setBooks(updatedBooks);
-    };
 
-    const handleIncrease = (id) => {
-        const updatedBooks = books.map(book => {
-            if (book.id === id && book.orderQuantity < book.stock) {
-                return { ...book, orderQuantity: book.orderQuantity + 1 };
-            }
-            return book;
-        });
-        setBooks(updatedBooks);
+        // Update selected books list
+        const selected = updatedBooks.filter(book => book.selected);
+        setSelectedBooks(selected);
     };
 
     return (
@@ -87,18 +82,18 @@ function UserForm() {
             </div>
             {loggedIn && (
                 <div>
-                    <h2>Welcome, {name}!</h2>
+                    <h2>Welcome !</h2>
                     <h3>Make an Order</h3>
                     <div className="books-container">
                         {books.map((book) => (
-                            <div key={book.id} className="book-card">
+                            <div key={book._id} className="book-card">
                                 <h4>{book.title}</h4>
                                 <p>In Stock: {book.stock}</p>
-                                <div>
-                                    <button onClick={() => handleDecrease(book.id)}>-</button>
-                                    <span>{book.orderQuantity}</span> 
-                                    <button onClick={() => handleIncrease(book.id)}>+</button>
-                                </div>
+                                <input
+                                    type="checkbox"
+                                    checked={book.selected}
+                                    onChange={() => handleCheckboxChange(book._id)}
+                                />
                             </div>
                         ))}
                     </div>

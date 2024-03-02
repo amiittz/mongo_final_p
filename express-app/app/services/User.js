@@ -32,5 +32,9 @@ module.exports = {
         user.orders.pull(orderid);
         await user.save();
         return user;
+    },
+    findUser: async(name) =>{
+        const user = await User.findOne({ name: name });
+        return user;
     }
 }

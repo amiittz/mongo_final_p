@@ -7,9 +7,18 @@ function AddUserForm() {
     const [password, setPassword] = useState("");
     const handleSubmit = async () => {
     try {
-      // Add the new user
-      await axios.post("http://localhost:3001/api/user/add", {name: name,password:password});
-      alert("User added successfully");
+      
+      const userExists = await axios.get(`http://localhost:3001/api/user/check/${name}`);
+        if (userExists.data != null) {
+            alert("User already exists");
+            return;
+        }
+        else{
+          await axios.post("http://localhost:3001/api/user/add", {name: name,password:password});
+          alert("User added successfully");
+        }
+      setName("");
+      setPassword("");
     } catch (error) {
       console.error("Error adding user:", error);
       alert("Error");

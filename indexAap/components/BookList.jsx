@@ -15,7 +15,7 @@ function ShowBooks() {
       }
     };
 
-    fetchData(); // Call the async function immediately
+    fetchData(); 
   }, []);
 
   return (

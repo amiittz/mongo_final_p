@@ -4,15 +4,15 @@ const Author = require("../models/Author")
 const mongoose = require('mongoose');
 
 function convertDateFormat(inputDate) {
-    // Split the input date string into hours, minutes, day, month, and year
+    
     const [time, date] = inputDate.split(' ');
     const [hours, minutes] = time.split(':');
     const [day, month, year] = date.split('-');
 
-    // Construct a new Date object using the parsed components
+    
     const newDate = new Date(`${year}-${month}-${day}T${hours}:${minutes}:00`);
 
-    // Return the date in the desired format
+    
     return newDate.toISOString();
 }
 
@@ -45,7 +45,7 @@ module.exports = {
                 const order = new Order({ items: orders, totalPrice: price });
                 return await order.save();
             }
-        return "ask for less books m8"
+            return "ask for less books m8"
         }catch (err) {
             res.status(500).send(err)
         }

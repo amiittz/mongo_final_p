@@ -1,4 +1,4 @@
-const { getAllUsers , createUser, delUser,addOrder,delOrder} = require('../services/User')
+const { getAllUsers , createUser, delUser,addOrder,delOrder,findUser} = require('../services/User')
 
 module.exports = {
     UserList: async (req, res) => {
@@ -45,6 +45,15 @@ module.exports = {
             res.json(await delOrder(name,orderid));
         }
         catch (err) {
+            res.status(500).send(err)
+        }
+    },
+
+    FindUser: async(req,res) =>{
+        try {
+            const {name} =req.params;
+            res.json(await findUser(name));
+        } catch (err) {
             res.status(500).send(err)
         }
     }

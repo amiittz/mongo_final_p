@@ -8,5 +8,6 @@ const orderSchema = new Schema({
     items:[orderItemSchema],
     totalPrice: Number,
 }, { timestamps: true });
+
 const Order = model('Order', orderSchema);
 module.exports = Order;
